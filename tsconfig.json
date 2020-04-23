@@ -7,13 +7,6 @@
     "noEmit": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "strict": true,
-    "baseUrl": ".",
-    "paths": {
-      "components": ["components/*"],
-      "screens": ["screens/*"],
-      "assets": ["assets/*"],
-      "store": ["store/*"]
-    }
+    "strict": true
   }
 }
