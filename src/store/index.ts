@@ -3,8 +3,10 @@ import { productsReducer } from "./reducers/productsReducer";
 import { composeWithDevTools } from "redux-devtools-extension";
 
 const rootReducer = combineReducers({
-  products: productsReducer,
+  productsState: productsReducer,
 });
+
+export type RootState = ReturnType<typeof rootReducer>;
 
 const store = createStore(rootReducer, composeWithDevTools());
 

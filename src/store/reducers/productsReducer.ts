@@ -1,5 +1,7 @@
+import PRODUCTS from "../../data/dummy-data";
+
 const initialState = {
-  products: []
+  products: PRODUCTS,
 };
 
 export const productsReducer = (state = initialState, action) => {

@@ -1,21 +1,17 @@
+import { NavigationContainer } from "@react-navigation/native";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import Test from "./components/Test";
+import { Provider } from "react-redux";
+
+import ProductsOverviewScreen from "./src/screens/shop/ProductsOverviewScreen";
+import store from "./src/store";
+import { ProductsNavigator } from "./src/navigation/ShopNavigator";
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <Test />
-    </View>
+    <Provider store={store}>
+      <NavigationContainer>
+        <ProductsNavigator />
+      </NavigationContainer>
+    </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
