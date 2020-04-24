@@ -1,41 +1,44 @@
 import React from "react";
-import { StyleSheet, Text, View, Image, Button } from "react-native";
+import { Button, Image, StyleSheet, Text, View } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
+
 import Product from "../../models/product";
 
 interface ProductItemProps {
   product: Product;
+  onViewDetail: (product: Product) => void;
+  onAddToCart: () => void;
 }
 
 const ProductItem = (props: ProductItemProps) => {
   return (
     <View style={styles.container}>
-      <View style={styles.imageContainer}>
-        <Image
-          source={{
-            uri: props.product.imageUrl,
-          }}
-          style={styles.image}
-        />
-      </View>
+      <View style={styles.touchable}>
+        <TouchableOpacity onPress={() => props.onViewDetail(props.product)}>
+          <>
+            <View style={styles.imageContainer}>
+              <Image
+                source={{
+                  uri: props.product.imageUrl,
+                }}
+                style={styles.image}
+              />
+            </View>
 
-      <View style={styles.details}>
-        <Text style={styles.title}>Title: {props.product.title}</Text>
-        <Text style={styles.price}>Price: {props.product.price}</Text>
-      </View>
+            <View style={styles.details}>
+              <Text style={styles.title}>Title: {props.product.title}</Text>
+              <Text style={styles.price}>Price: {props.product.price}</Text>
+            </View>
 
-      <View style={styles.actions}>
-        <Button
-          title="View Details"
-          onPress={() => {
-            console.log("wtf");
-          }}
-        />
-        <Button
-          title="To Cart"
-          onPress={() => {
-            console.log("wtf");
-          }}
-        />
+            <View style={styles.actions}>
+              <Button
+                title="View Details"
+                onPress={() => props.onViewDetail(props.product)}
+              />
+              <Button title="To Cart" onPress={() => props.onAddToCart()} />
+            </View>
+          </>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -50,6 +53,11 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 300,
     margin: 20,
+    backgroundColor: "#fff",
+  },
+  touchable: {
+    overflow: "hidden",
+    borderRadius: 10,
   },
   imageContainer: {
     height: "60%",
@@ -64,6 +72,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
+    fontFamily: "roboto-bold",
   },
   price: {
     fontSize: 14,
