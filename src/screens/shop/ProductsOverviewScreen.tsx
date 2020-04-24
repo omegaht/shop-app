@@ -4,17 +4,37 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import Product from "../../models/product";
 import ProductItem from "../../components/shop/ProductItem";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { ProductStackParamList } from "../../navigation/ShopNavigator";
 
-const ProductsOverviewScreen = () => {
+type ProductOverviewScreenNavigationProp = StackNavigationProp<
+  ProductStackParamList,
+  "Products Overview"
+>;
+
+type ProductOverviewScreenProps = {
+  navigation: ProductOverviewScreenNavigationProp;
+};
+
+const ProductsOverviewScreen = (props: ProductOverviewScreenProps) => {
   const products = useSelector(
     (state: RootState) => state.productsState.products
   );
+
+  const handleViewDetail = (product: Product) =>
+    props.navigation.navigate("Product Detail", { product });
 
   return (
     <View>
       <FlatList
         data={products}
-        renderItem={(itemData) => <ProductItem product={itemData.item} />}
+        renderItem={(itemData) => (
+          <ProductItem
+            product={itemData.item}
+            onViewDetail={handleViewDetail}
+            onAddToCart={() => console.log("cart")}
+          />
+        )}
       />
     </View>
   );
