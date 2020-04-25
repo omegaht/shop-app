@@ -3,6 +3,10 @@ import { StyleSheet, Text, View, Image, Button } from "react-native";
 import { RouteProp } from "@react-navigation/native";
 import { ProductStackParamList } from "../../navigation/ShopNavigator";
 import { ScrollView } from "react-native-gesture-handler";
+import { useDispatch } from "react-redux";
+import Product from "../../models/product";
+import { CartActionTypes } from "../../store/actions/types";
+import { addToCart } from "../../store/actions/cart";
 
 type ProductDetailScreenRouteProp = RouteProp<
   ProductStackParamList,
@@ -15,14 +19,17 @@ type ProductDetailScreenProps = {
 
 const ProductDetailScreen = ({ route }: ProductDetailScreenProps) => {
   const { product } = route.params;
+
+  const dispatch = useDispatch();
+
+  const handleaddToCart = (product: Product) =>
+    dispatch<CartActionTypes>(addToCart(product));
+
   return (
     <ScrollView>
       <View style={styles.container}>
         <Image source={{ uri: product.imageUrl }} style={styles.image} />
-        <Button
-          onPress={() => console.log("Todo: add to cart")}
-          title={product.title}
-        />
+        <Button onPress={() => handleaddToCart(product)} title="Add to cart" />
         <View>
           <Text style={styles.price}>Price $: {product.price}</Text>
           <Text style={styles.description}>

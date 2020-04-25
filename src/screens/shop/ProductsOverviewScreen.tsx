@@ -1,11 +1,14 @@
-import React from "react";
-import { StyleSheet, Text, View, FlatList } from "react-native";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store";
-import Product from "../../models/product";
-import ProductItem from "../../components/shop/ProductItem";
 import { StackNavigationProp } from "@react-navigation/stack";
+import React from "react";
+import { FlatList, StyleSheet, View } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
+
+import ProductItem from "../../components/shop/ProductItem";
+import Product from "../../models/product";
 import { ProductStackParamList } from "../../navigation/ShopNavigator";
+import { RootState } from "../../store";
+import { CartActionTypes } from "../../store/actions/types";
+import { addToCart } from "../../store/actions/cart";
 
 type ProductOverviewScreenNavigationProp = StackNavigationProp<
   ProductStackParamList,
@@ -24,6 +27,11 @@ const ProductsOverviewScreen = (props: ProductOverviewScreenProps) => {
   const handleViewDetail = (product: Product) =>
     props.navigation.navigate("Product Detail", { product });
 
+  const dispatch = useDispatch();
+
+  const handleaddToCart = (product: Product) =>
+    dispatch<CartActionTypes>(addToCart(product));
+
   return (
     <View>
       <FlatList
@@ -32,7 +40,7 @@ const ProductsOverviewScreen = (props: ProductOverviewScreenProps) => {
           <ProductItem
             product={itemData.item}
             onViewDetail={handleViewDetail}
-            onAddToCart={() => console.log("cart")}
+            onAddToCart={handleaddToCart}
           />
         )}
       />

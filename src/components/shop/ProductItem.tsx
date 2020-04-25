@@ -7,7 +7,7 @@ import Product from "../../models/product";
 interface ProductItemProps {
   product: Product;
   onViewDetail: (product: Product) => void;
-  onAddToCart: () => void;
+  onAddToCart: (product: Product) => void;
 }
 
 const ProductItem = (props: ProductItemProps) => {
@@ -35,7 +35,10 @@ const ProductItem = (props: ProductItemProps) => {
                 title="View Details"
                 onPress={() => props.onViewDetail(props.product)}
               />
-              <Button title="To Cart" onPress={() => props.onAddToCart()} />
+              <Button
+                title="To Cart"
+                onPress={() => props.onAddToCart(props.product)}
+              />
             </View>
           </>
         </TouchableOpacity>
