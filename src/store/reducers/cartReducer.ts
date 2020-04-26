@@ -34,10 +34,28 @@ export const cartReducer = (state = initialState, action: CartActionTypes) => {
       };
 
     case DELETE_FROM_CART:
+      const selectedCartItem = state.items[action.payload];
+      const currentQty = selectedCartItem.quantity;
+      let updatedCartItems;
+      if (currentQty > 1) {
+        const updatedCartItem = new CartItem(
+          selectedCartItem.quantity - 1,
+          selectedCartItem.productPrice,
+          selectedCartItem.productTitle,
+          selectedCartItem.sum - selectedCartItem.productPrice
+        );
+        updatedCartItems = {
+          ...state.items,
+          [action.payload]: updatedCartItem,
+        };
+      } else {
+        updatedCartItems = { ...state.items };
+        delete updatedCartItems[action.payload];
+      }
       return {
         ...state,
-        items: state.items.filter((item) => item.id === action.payload),
-        totalSum: state.totalSum--,
+        items: updatedCartItems,
+        totalSum: state.totalSum - selectedCartItem.productPrice,
       };
 
     default:

@@ -1,6 +1,6 @@
 import { StackNavigationProp } from "@react-navigation/stack";
 import React from "react";
-import { FlatList, StyleSheet, View } from "react-native";
+import { FlatList, StyleSheet, View, Button } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
 import ProductItem from "../../components/shop/ProductItem";
@@ -9,6 +9,7 @@ import { ProductStackParamList } from "../../navigation/ShopNavigator";
 import { RootState } from "../../store";
 import { CartActionTypes } from "../../store/actions/types";
 import { addToCart } from "../../store/actions/cart";
+import Colors from "../../constants/Colors";
 
 type ProductOverviewScreenNavigationProp = StackNavigationProp<
   ProductStackParamList,
@@ -41,7 +42,18 @@ const ProductsOverviewScreen = (props: ProductOverviewScreenProps) => {
             product={itemData.item}
             onViewDetail={handleViewDetail}
             onAddToCart={handleaddToCart}
-          />
+          >
+            <Button
+              color={Colors.primary}
+              title="View Details"
+              onPress={() => handleViewDetail(itemData.item)}
+            />
+            <Button
+              color={Colors.primary}
+              title="To Cart"
+              onPress={() => handleaddToCart(itemData.item)}
+            />
+          </ProductItem>
         )}
       />
     </View>

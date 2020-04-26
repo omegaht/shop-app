@@ -1,10 +1,11 @@
-import React from "react";
-import { Button, Image, StyleSheet, Text, View } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import React, { Children, ReactNode } from "react";
+import { Image, StyleSheet, Text, View } from "react-native";
+import { TouchableNativeFeedback } from "react-native-gesture-handler";
 
 import Product from "../../models/product";
 
 interface ProductItemProps {
+  children: ReactNode;
   product: Product;
   onViewDetail: (product: Product) => void;
   onAddToCart: (product: Product) => void;
@@ -14,7 +15,9 @@ const ProductItem = (props: ProductItemProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.touchable}>
-        <TouchableOpacity onPress={() => props.onViewDetail(props.product)}>
+        <TouchableNativeFeedback
+          onPress={() => props.onViewDetail(props.product)}
+        >
           <>
             <View style={styles.imageContainer}>
               <Image
@@ -30,18 +33,9 @@ const ProductItem = (props: ProductItemProps) => {
               <Text style={styles.price}>Price: {props.product.price}</Text>
             </View>
 
-            <View style={styles.actions}>
-              <Button
-                title="View Details"
-                onPress={() => props.onViewDetail(props.product)}
-              />
-              <Button
-                title="To Cart"
-                onPress={() => props.onAddToCart(props.product)}
-              />
-            </View>
+            <View style={styles.actions}>{props.children}</View>
           </>
-        </TouchableOpacity>
+        </TouchableNativeFeedback>
       </View>
     </View>
   );
