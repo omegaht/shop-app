@@ -1,14 +1,15 @@
 import { StackNavigationProp } from "@react-navigation/stack";
 import React from "react";
-import { StyleSheet, Text, View, Button, FlatList } from "react-native";
+import { Button, FlatList, StyleSheet, Text, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
+import CartItem from "../../components/shop/CartItem";
+import Card from "../../components/ui/Card";
 import Colors from "../../constants/Colors";
 import { ProductStackParamList } from "../../navigation/ShopNavigator";
 import { RootState } from "../../store";
-import Card from "../../components/ui/Card";
-import CartItem from "../../components/shop/CartItem";
 import { removeFromCart } from "../../store/actions/cart";
+import { addOrder } from "../../store/actions/orders";
 
 type CartOverviewScreenNavigationProp = StackNavigationProp<
   ProductStackParamList,
@@ -55,7 +56,7 @@ const CartScreen = (props: ProductOverviewScreenProps) => {
           color={Colors.accent}
           title="Order Now"
           disabled={cartItems.length === 0}
-          onPress={() => alert("oder now")}
+          onPress={() => dispatch(addOrder(cartItems, cartTotalAmount))}
         />
       </Card>
       <FlatList
